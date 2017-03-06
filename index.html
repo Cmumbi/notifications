@@ -6,12 +6,14 @@
 	<link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
 	<link rel="stylesheet" type="text/css" href="bower_components/ngToast/dist/ngToast.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="bower_components/nprogress/nprogress.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="angular/angular.js"></script>
 	<script type="text/javascript" src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>	
 	<script type="text/javascript" src="bower_components/ngToast/dist/ngToast.min.js"></script>
+	<script type="text/javascript" src="bower_components/nprogress/nprogress.js"></script>
 
 </head>
 <body ng-controller="homeController">
@@ -118,8 +120,8 @@
 								<div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
 									<label>Username</label>
 									<input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-									  <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
-									  <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+									<p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
+									<p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
 								</div>
 
 								<!-- EMAIL -->
@@ -133,6 +135,29 @@
 								<button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
 
 							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="overview-panel well">
+						<h3>Progress Bar:</h3>
+						<div class="download-links">
+							<ul class="list-inline">
+								<li>
+									<a ng-click="progressBarStart()" class="btn btn-default">
+										<i class="fa fa-play"></i> Start
+									</a>
+								</li>
+								<li>
+									<a href="" class="btn btn-default" ng-click="progressBarIncrease()">
+										<i class="fa fa-plus"></i> Increase
+									</a>
+								</li>
+								<li>
+									<a ng-click="progressBarStop()"class="btn btn-default"><i class="fa fa-stop"></i> Stop
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -198,17 +223,28 @@
 				}
 
 				$scope.submitForm = function(userForm) {
-				    // check to make sure the form is completely valid
-				    console.log(userForm);
 				    if (userForm.$valid) {
-						sweetAlert("Yeah!", "Our form is amazing!", "success");
+				    	sweetAlert("Yeah!", "Our form is amazing!", "success");
 				    }
 				};
 
+				$scope.progressBarStart=function(){
+					NProgress.start();
+				}
+
+				$scope.progressBarIncrease=function(){
+					NProgress.inc();
+				}
+
+				$scope.progressBarStop=function(){
+					NProgress.done();
+					NProgress.remove();
+					ngToast.create({className:'success',content:'<i class="fa fa-check-circle"></i> Ndani!'});
+				}
 
 
-		};
-		app.controller("homeController", ["$scope","ngToast", homeController]);
+			};
+			app.controller("homeController", ["$scope","ngToast", homeController]);
 		})();
 	</script>
-</html>
+	</html>
