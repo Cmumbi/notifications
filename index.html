@@ -185,11 +185,48 @@
 					</div>
 				</div>
 
+				<div class="col-md-6">
+					<div class="overview-panel well">
+						<h3>Multi-Step Form:</h3>
+						<div class="download-links">
+							<form class="form-vertical" name="multiStepForm" novalidate>
+								<fieldset ng-show="step == 1">
+									<legend>Step one</legend>
+									<div class="form-group">
+										<label for="name">Name</label>
+										<input class="form-control" type="text" id="name" name="name" ng-model="name" />
+									</div>
+									<button class="btn btn-primary" ng-click="nextStep()">Next step</button>
+								</fieldset>
+								<fieldset ng-show="step == 2">
+									<legend>Step two</legend>
+									<div class="form-group">
+										<label for="email">Email</label>
+										<input class="form-control" type="email" id="email" name="email" ng-model="email" />
+									</div>
+									<button class="btn btn-default" ng-click="prevStep()">Previous step</button>
+									<button class="btn btn-primary" ng-click="nextStep()">Next step</button>
+								</fieldset>
+								<fieldset ng-show="step == 3">
+									<legend>Step three</legend>
+									<div class="form-group">
+										<label for="msg">Short message</label>
+										<input class="form-control" type="text" id="msg" name="msg" ng-model="msg" />
+									</div>
+									<button class="btn btn-default" ng-click="prevStep()">Previous step</button>
+									<button class="btn btn-primary" ng-click="submitMultiStepForm()">Submit</button>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
 
 			</div>
 		</div>
-		<footer>
 
+		
+
+		<footer>
 			<div class="footer-main">
 				<div class="container">
 					<a href="/">Notifications</a> is a project created and maintained by <a>Cynthia Mumbi</a>.
@@ -197,9 +234,6 @@
 				</div>
 			</div>
 		</footer>
-
-
-
 	</body>
 
 	<script>
@@ -275,7 +309,21 @@
 					}, 2000);
 				};
 
+				$scope.step = 1;
 
+				$scope.nextStep = function() {
+					$scope.step++;
+				}
+
+				$scope.prevStep = function() {
+					$scope.step--;
+				}
+
+				$scope.submitMultiStepForm = function() {
+
+					sweetAlert("Yeah!", "Our form is amazing!", "success");
+
+				}
 			};
 			app.controller("homeController", ["$scope","ngToast","$timeout", homeController]);
 		})();
